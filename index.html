@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZANSEED FOUNDATION - Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f6ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      width: 320px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 15px;
+      color: #1e3a8a;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #1e3a8a;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    button:hover {
+      background: #163172;
+    }
+
+    .msg {
+      text-align: center;
+      margin-top: 10px;
+      color: red;
+    }
+
+    .link {
+      text-align: center;
+      margin-top: 10px;
+      color: #1e3a8a;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN -->
+  <div class="container" id="loginBox">
+    <h2>Login</h2>
+    <input type="text" id="loginUser" placeholder="Username" />
+    <input type="password" id="loginPass" placeholder="Password" />
+    <button onclick="login()">Login</button>
+    <p class="msg" id="loginMsg"></p>
+    <p class="link" onclick="showRegister()">Huna account? Register</p>
+  </div>
+
+  <!-- REGISTER -->
+  <div class="container hidden" id="registerBox">
+    <h2>Register</h2>
+    <input type="text" id="regUser" placeholder="Username" />
+    <input type="password" id="regPass" placeholder="Password" />
+    <button onclick="register()">Create Account</button>
+    <p class="msg" id="regMsg"></p>
+    <p class="link" onclick="showLogin()">Tayari una account? Login</p>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="container hidden" id="dashboard">
+    <h2>Welcome</h2>
+    <p>You are logged into ZANSEED FOUNDATION system.</p>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+<script>
+  function showRegister() {
+    document.getElementById('loginBox').classList.add('hidden');
+    document.getElementById('registerBox').classList.remove('hidden');
+  }
+
+  function showLogin() {
+    document.getElementById('registerBox').classList.add('hidden');
+    document.getElementById('loginBox').classList.remove('hidden');
+  }
+
+  function register() {
+    let u = document.getElementById('regUser').value;
+    let p = document.getElementById('regPass').value;
+
+    if (!u || !p) {
+      document.getElementById('regMsg').innerText = "Fill all fields";
+      return;
+    }
+
+    localStorage.setItem("user", u);
+    localStorage.setItem("pass", p);
+
+    document.getElementById('regMsg').style.color = "green";
+    document.getElementById('regMsg').innerText = "Account created! Sasa login";
+  }
+
+  function login() {
+    let u = document.getElementById('loginUser').value;
+    let p = document.getElementById('loginPass').value;
+
+    let su = localStorage.getItem("user");
+    let sp = localStorage.getItem("pass");
+
+    if (u === su && p === sp) {
+      document.getElementById('loginBox').classList.add('hidden');
+      document.getElementById('dashboard').classList.remove('hidden');
+    } else {
+      document.getElementById('loginMsg').innerText = "Wrong username or password";
+    }
+  }
+
+  function logout() {
+    document.getElementById('dashboard').classList.add('hidden');
+    document.getElementById('loginBox').classList.remove('hidden');
+  }
+</script>
+
+</body>
